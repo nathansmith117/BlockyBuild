@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include <time.h>
@@ -22,7 +23,7 @@
 #define GAME_COMMON_H
 
 #define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 720
+#define WINDOW_HEIGHT 960
 
 // Memory management.
 #define BB_MALLOC(size) malloc(size)
