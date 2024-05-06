@@ -10,11 +10,11 @@ void initGame(Game* game)
     initMainMenu(&game->mainMenu);
     initGameScreen(&game->gameScreen);
 
-    // Camera.
-    initMainCamera(&game->mainCamera);
-
-    // World
+    // World.
     initWorld(&game->world);
+
+    // Player.
+    initPlayer(&game->player);
 }
 
 void updateGame(Game* game)

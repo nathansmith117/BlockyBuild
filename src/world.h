@@ -6,8 +6,6 @@
 #define WORLD_SIZE_LIMIT 10
 #define WORLD_HEIGHT_LIMIT 10
 
-#define BLOCK_SIZE 1.0
-
 // The blocks are quite basic. Just an id and thats all.
 typedef enum Block {
     NONE_BLOCK,

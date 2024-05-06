@@ -1,7 +1,7 @@
 #include "gameCommon.h"
 #include "screensInclude.h"
-#include "cameras.h"
 #include "world.h"
+#include "player.h"
 
 #ifndef GAME_H
 #define GAME_H
@@ -17,8 +17,7 @@ typedef struct Game {
     GameScreen gameScreen;
 
     World world;
-
-    Camera3D mainCamera;
+    Player player;
 } Game;
 
 void initGame(Game* game);

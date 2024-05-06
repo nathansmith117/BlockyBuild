@@ -7,8 +7,8 @@ void drawBlock(Block block, Vector3 position)
         case NONE_BLOCK:
             break;
         case GRASS_BLOCK:
-            DrawCubeV(position, (Vector3){BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE}, GREEN);
-            DrawCubeWiresV(position, (Vector3){BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE}, GRAY);
+            DrawCubeV(position, (Vector3){1.0, 1.0, 1.0}, GREEN);
+            DrawCubeWiresV(position, (Vector3){1.0, 1.0, 1.0}, GRAY);
             break;
         default:
             break;
@@ -42,7 +42,6 @@ void drawWorld(World* world, Game* game)
                 position.x -= WORLD_SIZE_LIMIT / 2.0;
                 position.y -= WORLD_HEIGHT_LIMIT / 2.0;
                 position.z -= WORLD_SIZE_LIMIT / 2.0;
-                position = Vector3Scale(position, BLOCK_SIZE);
 
                 drawBlock(world->blocks[y][z][x], position);
             }

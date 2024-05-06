@@ -1,7 +1,7 @@
 #include "gameScreen.h"
 #include "game.h"
-#include "cameras.h"
 #include "world.h"
+#include "player.h"
 
 void initGameScreen(GameScreen* gameScreen)
 {
@@ -11,10 +11,10 @@ void updateGameScreen(GameScreen* gameScreen, Game* game)
 {
     ClearBackground(BLACK);
 
-    updateMainCamera(&game->mainCamera);
+    updatePlayer(&game->player, game);
 
-    // Draw 3d world.
-    BeginMode3D(game->mainCamera);
+    // draw 3d shit.
+    BeginMode3D(game->player.camera);
 
     drawWorld(&game->world, game);
 
