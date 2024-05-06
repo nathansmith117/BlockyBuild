@@ -1,6 +1,7 @@
 #include "gameCommon.h"
-#include "blocks.h"
 #include "screensInclude.h"
+#include "cameras.h"
+#include "world.h"
 
 #ifndef GAME_H
 #define GAME_H
@@ -14,8 +15,10 @@ typedef struct Game {
     ScreenID screenID;
     MainMenu mainMenu;
     GameScreen gameScreen;
-    
-    Blocks blocks;
+
+    World world;
+
+    Camera3D mainCamera;
 } Game;
 
 void initGame(Game* game);

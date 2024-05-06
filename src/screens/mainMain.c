@@ -14,6 +14,7 @@ void updateMainMenu(MainMenu* mainMenu, Game* game)
     if (GuiButton(mainMenu->startButton, "Start"))
     {
         game->screenID = GAME_SCREEN;
+        DisableCursor();
     }
 
     // Handle resize.

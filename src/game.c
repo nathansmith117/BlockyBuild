@@ -3,11 +3,18 @@
 void initGame(Game* game)
 {
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Blocky Build");
+    SetWindowState(FLAG_WINDOW_RESIZABLE);
 
     // Screens.
     game->screenID = MAIN_MENU_SCREEN;
     initMainMenu(&game->mainMenu);
     initGameScreen(&game->gameScreen);
+
+    // Camera.
+    initMainCamera(&game->mainCamera);
+
+    // World
+    initWorld(&game->world);
 }
 
 void updateGame(Game* game)
