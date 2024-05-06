@@ -14,7 +14,7 @@ if (EMSCRIPTEN)
 endif ()
 
 # Add source files.
-file(GLOB SRC_FILES src/*.c)
+file(GLOB SRC_FILES src/*.c src/screens/*.c)
 
 add_executable(${PROJECT_NAME} ${SRC_FILES})
 
