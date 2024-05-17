@@ -17,11 +17,13 @@ void drawBlock(Block block, Vector3 position)
 
 void initWorld(World* world)
 {
-    for (int y = 0; y < WORLD_HEIGHT_LIMIT; ++y)
+    world->size = (Vector3){WORLD_SIZE_LIMIT, WORLD_HEIGHT_LIMIT, WORLD_SIZE_LIMIT};
+
+    for (int y = 0; y < world->size.y; ++y)
     {
-        for (int z = 0; z < WORLD_SIZE_LIMIT; ++z)
+        for (int z = 0; z < world->size.z; ++z)
         {
-            for (int x = 0; x < WORLD_SIZE_LIMIT; ++x)
+            for (int x = 0; x < world->size.x; ++x)
             {
                 world->blocks[y][z][x] = GRASS_BLOCK;
             }
@@ -31,20 +33,36 @@ void initWorld(World* world)
 
 void drawWorld(World* world, Game* game)
 {
-    for (int y = 0; y < WORLD_HEIGHT_LIMIT; ++y)
+    for (int y = 0; y < world->size.y; ++y)
     {
-        for (int z = 0; z < WORLD_SIZE_LIMIT; ++z)
+        for (int z = 0; z < world->size.z; ++z)
         {
-            for (int x = 0; x < WORLD_SIZE_LIMIT; ++x)
+            for (int x = 0; x < world->size.x; ++x)
             {
                 // Get position and center the world.
                 Vector3 position = (Vector3){x, y, z};
-                position.x -= WORLD_SIZE_LIMIT / 2.0;
-                position.y -= WORLD_HEIGHT_LIMIT / 2.0;
-                position.z -= WORLD_SIZE_LIMIT / 2.0;
+                position.x -= world->size.x / 2.0;
+                position.y -= world->size.y / 2.0;
+                position.z -= world->size.z / 2.0;
 
                 drawBlock(world->blocks[y][z][x], position);
             }
         }
     }
+}
+
+Block getBlockAtWorldPosition(World* world, Vector3 position)
+{
+    Vector3 blockPosition = Vector3Subtract(position, Vector3Scale(world->size, 0.0));
+    blockPosition = (Vector3){(int)blockPosition.x, (int)blockPosition.y, (int)blockPosition.z};
+
+    // Check bounds
+    if (blockPosition.x < 0.0 || blockPosition.x >= world->size.x ||
+        blockPosition.y < 0.0 || blockPosition.y >= world->size.y ||
+        blockPosition.z < 0.0 || blockPosition.z >= world->size.z)
+    {
+        return NONE_BLOCK;
+    }
+    
+    return world->blocks[(int)blockPosition.y][(int)blockPosition.z][(int)blockPosition.x];
 }

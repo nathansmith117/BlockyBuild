@@ -11,10 +11,10 @@ void updateGameScreen(GameScreen* gameScreen, Game* game)
 {
     ClearBackground(BLACK);
 
-    updatePlayer(&game->player, game);
-
     // draw 3d shit.
     BeginMode3D(game->player.camera);
+
+    updatePlayer(&game->player, game);
 
     drawWorld(&game->world, game);
 

@@ -1,4 +1,5 @@
 #include "player.h"
+#include "game.h"
 #include "world.h"
 
 void initPlayer(Player* player)
@@ -10,7 +11,7 @@ void initPlayer(Player* player)
         .projection = CAMERA_PERSPECTIVE
     };
 
-    player->position = (Vector3){0.0, WORLD_HEIGHT_LIMIT / 2.0 + 2.0, 0.0};
+    player->position = (Vector3){0.0, WORLD_HEIGHT_LIMIT / 2.0 + 0.0, 0.0};
     player->direction = (Vector3){0.0, 0.0, 1.0};
     player->velocity = Vector3Zero();
     player->speed = PLAYER_SPEED;
@@ -58,9 +59,70 @@ void updatePlayerControls(Player* player, Game* game)
     player->velocity = Vector3Scale(player->velocity, PLAYER_SPEED);
 }
 
+void handleCollisionWithWorldPlayer(Player* player, Game* game)
+{
+    World* world = &game->world;
+
+    // Player bounding box.
+    float playerSize = 0.2;
+    
+    BoundingBox playerBox = (BoundingBox){
+        .min = (Vector3){-playerSize, -PLAYER_HEIGHT / 2.0, -playerSize},
+        .max = (Vector3){playerSize, 0.0, playerSize}
+    };
+
+    playerBox.min = Vector3Add(playerBox.min, player->position);
+    playerBox.max = Vector3Add(playerBox.max, player->position);
+
+    // Check bear by blocks.
+    int checkCollisionDistance = 2.0;
+
+    DrawBoundingBox(playerBox, BLUE);
+
+    for (int y = -checkCollisionDistance; y < checkCollisionDistance; ++y)
+    {
+        for (int z = -checkCollisionDistance; z < checkCollisionDistance; ++z)
+        {
+            for (int x = -checkCollisionDistance; x < checkCollisionDistance; ++x)
+            {
+                int currentX = player->position.x + x;
+                int currentY = player->position.y + y;
+                int currentZ = player->position.z + z;
+
+                Vector3 blockPosition = (Vector3){currentX, currentY, currentZ};
+                Block block = getBlockAtWorldPosition(world, blockPosition);
+
+                // No block here.
+                if (block == NONE_BLOCK)
+                {
+                    continue;
+                }
+
+                // Check collision.
+                BoundingBox blockBox = (BoundingBox){
+                    .min = (Vector3){-0.5, -0.5, -0.5},
+                    .max = (Vector3){0.5, 0.5, 0.5}
+                };
+
+                blockBox.min = Vector3Add(blockBox.min, blockPosition);
+                blockBox.max = Vector3Add(blockBox.max, blockPosition);
+
+                DrawBoundingBox(blockBox, RED);
+
+                // If collided.
+                if (CheckCollisionBoxes(playerBox, blockBox))
+                {
+                    puts("hi");
+                }
+            }
+        }
+    }
+}
+
 void updatePlayer(Player* player, Game* game)
 {
     updatePlayerControls(player, game);
+    handleCollisionWithWorldPlayer(player, game);
 
     // Apply velocity.
     player->position = Vector3Add(

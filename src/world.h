@@ -13,6 +13,7 @@ typedef enum Block {
 } Block;
 
 typedef struct World {
+    Vector3 size; // Might be used later if a allocated world gets added.
     Block blocks[WORLD_HEIGHT_LIMIT][WORLD_SIZE_LIMIT][WORLD_SIZE_LIMIT];
 } World;
 
@@ -20,5 +21,7 @@ void drawBlock(Block block, Vector3 position);
 
 void initWorld(World* world);
 void drawWorld(World* world, Game* game);
+
+Block getBlockAtWorldPosition(World* world, Vector3 position);
 
 #endif
